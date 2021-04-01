@@ -28,21 +28,21 @@ class Predator(Animal):
         self.speed = speed
 
     def eat(self, forest: Forest):
-        prey = random.choice(list(forest.animals.values()))
-        if prey.id == self.id:
+        target = random.choice(list(forest.animals.values()))
+        if target.id == self.id:
             print('There are no herbivores in the forest')
         else:
-            if (self.speed > prey.speed) and (self.current_power > prey.current_power):
+            if (self.speed > target.speed) and (self.current_power > target.current_power):
                 print('Predator find prey')
                 tmp = self.current_power
                 self.current_power = min(self.current_power + self.max_power * 0.5, self.max_power)
-                print(f'Predator regained {self.current_power - tmp} power')
-                forest.animals[prey.id].current_power = 0
+                print(f'Predator regained {self.current_power - tmp} strength')
+                forest.animals[target.id].current_power = 0
             else:
                 print('Predator didn`t catch the prey and lost strength')
                 self.current_power = self.current_power - 0.3 * self.max_power
-                forest.animals[prey.id].current_power = forest.animals[prey.id].current_power - 0.3 * \
-                                                          forest.animals[prey.id].max_power
+                forest.animals[target.id].current_power = forest.animals[target.id].current_power - 0.3 * \
+                                                          forest.animals[target.id].max_power
 
     def __str__(self):
         return f'{self.__class__.__name__}'
@@ -63,10 +63,10 @@ class Herbivorous(Animal):
         print('Herbivorous eating')
         tmp = self.current_power
         self.current_power = min(self.current_power + self.max_power * 0.5, self.max_power)
-        print(f'Herbivorous regained {self.current_power - tmp} power')
+        print(f'Herbivorous regained {self.current_power - tmp} strength')
 
 
-AnyAnimal = Any[Herbivorous, Predator]
+AnyAnimal = [Herbivorous, Predator]
 
 
 class Forest:
@@ -75,7 +75,7 @@ class Forest:
         self.animals: Dict[str, AnyAnimal] = dict()
 
     def add_animal(self, animal: AnyAnimal):
-        print('New animal in fores', animal)
+        print('New animal in forest', animal)
         self.animals.update({animal.id: animal})
 
     def remove_animal(self, animal: AnyAnimal):
