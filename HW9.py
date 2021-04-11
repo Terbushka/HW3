@@ -14,199 +14,138 @@
 import logging
 
 try:
-    file = open("hw9_task1.log", 'r')
+    file = open('hw9_task1.log', 'r')
 except:
-    file = open("hw9_task1.log", 'w')
+    file = open('hw9_task1.log', 'w')
 finally:
     file.close()
 
-log_template = '%(asctime)s - %(levelname)s - %(message)s'
-logging.basicConfig(level=logging.DEBUG, filename="hw9_task1.log", filemode="a", format=log_template)
+template_log = '%(asctime)s - %(levelname)s - %(message)s'
+logging.basicConfig(level=logging.DEBUG, filename='hw9_task1.log', filemode='a', format=template_log)
 
 
-def Addition():
-    print('Addition')
-    logging.info("Addition")
-    str_a = input('First number: ')
+def starting():
+    logging.info("Start calculator'")
+
+
+def calculator():
+
+    global number_1, number_2
+    logging.info("called calculator function")
     try:
-        a = int(str_a)
+        number_1 = float(input('Enter first number: '))
     except ValueError:
-        print('a is not decimal')
-        logging.error('not decimal first number to do addition')
-        return
-    str_b = input('Second number: ')
+        print('wrong format')
+        logging.error("incorrect variable format")
     try:
-        b = int(str_b)
+        number_2 = float(input('Enter second number: '))
     except ValueError:
-        print("b is not decimal")
-        logging.error('not decimal second number to do addition')
-        return
-    c = a + b
-    print(f"{a} + {b} = {c}")
-    logging.info(f"Addition is finished, {a}, {b}")
-    return c
+        print('Wrong format')
+        logging.error("incorrect variable format")
+
+    operation = input('''
+    Please choose  math operation:
+    + for Addition
+    - for Subtraction
+    * for Multiplication
+    / for Division
+    ** for Exponentiation
+    nrt for n-th root
+    per for Percentage of number
+    ''')
+    logging.info("selected operation")
+
+    if operation == '+':
+        logging.info("Addition")
+        try:
+            print('{} + {} = '.format(number_1, number_2))
+            logging.info("Addition completed successfully")
+            return print(number_1 + number_2)
+        except UnboundLocalError:
+            print('One of the numbers is not decimal')
+            logging.error("indefinite variable")
+    elif operation == '-':
+        logging.info("Subtraction")
+        try:
+            print('{} - {} = '.format(number_1, number_2))
+            logging.info("subtraction completed successfully")
+            return print(number_1 - number_2)
+        except UnboundLocalError:
+            print('One of the numbers is not decimal')
+            logging.error("indefinite variable")
+    elif '*' == operation:
+        logging.info("Multiply function is selected")
+        try:
+            print('{} * {} = '.format(number_1, number_2))
+            logging.info("multiplication completed successfully")
+            return print(number_1 * number_2)
+        except UnboundLocalError:
+            print('One of the numbers is not decimal')
+            logging.error("indefinite variable")
+    elif operation == '/':
+        logging.info("Division")
+        try:
+            print('{} / {} = '.format(number_1, number_2))
+            logging.info("Division completed successfully")
+            return print(number_1 / number_2)
+        except UnboundLocalError:
+            print('One of the numbers is not decimal')
+            logging.error("indefinite variable")
+        except ZeroDivisionError:
+            print('division by zero')
+            logging.error("attempt to divide by zero")
+    elif operation == '**':
+        logging.info("Exponentiation is selected")
+        try:
+            print('{} ** {} = '.format(number_1, number_2))
+            logging.info("Exponentiation completed successfully")
+            return print(number_1 ** number_2)
+        except UnboundLocalError:
+            print('One of the numbers is not decimal')
+            logging.error("indefinite variable")
+    elif operation == 'nrt':
+        logging.info("the n-th root function is selected")
+        try:
+            print('{} ** (1/{})'.format(number_1, number_2))
+            logging.info("n-th root  completed successfully")
+            return print(number_1 ** (1 / number_2))
+        except UnboundLocalError:
+            print('One of the numbers is not decimal')
+            logging.error("indefinite variable")
+        except ZeroDivisionError:
+            print('can not get root, number_2 is zero')
+            logging.error("attempt to divide by zero")
+    elif operation == 'per':
+        logging.info("Percentage cent of number is selected")
+        try:
+            print('{} * {} / 100'.format(number_1, number_2))
+            logging.info("Percentage of number completed successfully")
+            return print(number_1 * number_2 / 100)
+        except UnboundLocalError:
+            print('One of the numbers is not decimal')
+            logging.error("indefinite variable")
+    else:
+        logging.error("non-existent operation selected")
+        print('You have not typed a valid operator, please run the program again.')
 
 
-def Subtraction():
-    print('Subtraction')
-    logging.info("calling Subtraction")
-    str_a = input('First number: ')
-    try:
-        a = int(str_a)
-    except ValueError:
-        print('a is not decimal')
-        logging.error('not decimal first number to do Subtraction')
-        return
-    str_b = input('Second number: ')
-    try:
-        b = int(str_b)
-    except ValueError:
-        print("b is not decimal")
-        logging.error('not decimal second number to do Subtraction')
-        return
-    c = a - b
-    print(f"{a} - {b} = {c}")
-    logging.info(f"Subtraction is finished, {a}, {b}")
-    return c
+def again():
+    calc_again = input('''
+Do you want to calculate again?
+Please type Y for YES or N for NO.
+''')
+    logging.info("called again function")
+    if calc_again.upper() == 'Y':
+        calculator()
+    elif calc_again.upper() == 'N':
+        print('exit')
+    else:
+        again()
 
 
-def Multiply():
-    print('Multiply')
-    logging.info("calling Multiply")
-    str_a = input('First num: ')
-    try:
-        a = int(str_a)
-    except ValueError:
-        print('a is not decimal')
-        logging.error('not decimal first number to do multiplication')
-        return
-    str_b = input('Second num: ')
-    try:
-        b = int(str_b)
-    except ValueError:
-        print("b is not decimal")
-        logging.error('not decimal second number to do multiplication')
-        return
-    c = a * b
-    print(f"{a} * {b} = {c}")
-    logging.info(f"Multiply is  finished, {a}, {b}")
-    return c
-
-
-def Division():
-    print('Division')
-    logging.info("calling Division")
-    str_a = input('First num: ')
-    try:
-        a = int(str_a)
-    except ValueError:
-        print("a is not decimal")
-        logging.error('not decimal first number to do Division')
-        return
-    str_b = input('Second num: ')
-    try:
-        b = int(str_b)
-    except ValueError:
-        print("b is not decimal")
-        logging.error('not decimal second number to do Division')
-        return
-    try:
-        c = a / b
-        print(f"{a} / {b} = {c}")
-        logging.info(f"Division is  finished, {a}, {b}")
-        return c
-    except ZeroDivisionError:
-        print("b is 0, ZeroDivisionError")
-        logging.error('trying to divide by zero')
-        return
-
-
-def Expo():
-    print('Expo')
-    logging.info("calling Expo")
-    str_a = input('First num: ')
-    try:
-        a = int(str_a)
-    except ValueError:
-        print("a is not decimal")
-        logging.error('not decimal first number to do Exponentiation')
-        return
-    str_b = input('Second num: ')
-    try:
-        b = int(str_b)
-    except ValueError:
-        print("b is not decimal")
-        logging.error('not decimal second number to do Exponentiation')
-        return
-    try:
-        c = a ** b
-    except ZeroDivisionError:
-        print("0 ^ -1 can't be compute")
-        logging.error('Trying 0 ^ -1')
-        return
-    print(f"{a} ^ {b} = {c}")
-    logging.info(f"Exponentiation is  finished, {a}, {b}")
-    return c
-
-
-def Square_root():
-    print('Square root')
-    logging.info("calling Square_root")
-    str_a = input('First num: ')
-    try:
-        a = int(str_a)
-    except ValueError:
-        print("a is not decimal")
-        logging.error('not decimal first number to do Square root')
-        return
-    str_b = input('second num: ')
-    try:
-        b = int(str_b)
-    except ValueError:
-        print("b is not decimal")
-        logging.error('not decimal second number to do Square root')
-        return
-    try:
-        c = a ** (1 / b)
-        print(f"{a} ^ {b} = {c}")
-        logging.info(f"Square root is  finished, {a}, {b}")
-        return c
-    except ZeroDivisionError:
-        print("b is 0, can't get root, ZeroDivisionError")
-        logging.error('trying to divide by zero (in degree)')
-        return
-
-
-def Percentage():
-    print('-Percentage-')
-    logging.info("calling Percentage")
-    str_a = input('First num: ')
-    try:
-        a = int(str_a)
-    except ValueError:
-        print("a is not decimal")
-        logging.error('not decimal first number to do Percentage')
-        return
-    str_b = input('Second num: ')
-    try:
-        b = int(str_b)
-    except ValueError:
-        print("b is not decimal")
-        logging.error('not decimal second number to do Percentage')
-        return
-    c = a * b / 100
-    print(f"{b}% from {a} = {c}")
-    logging.info(f"Percentage is finished, {a}, {b}")
-    return c
-
-
-Addition()
-Subtraction()
-Multiply()
-Division()
-Expo()
-Square_root()
-Percentage()
+starting()
+calculator()
+again()
 
 # ---------------------------------------------------------
 # Task 2
@@ -227,97 +166,96 @@ Percentage()
 # 0 відсотків заряду - пилосос кричить щоб його занесли на зарядку бо сам доїхати не може)
 
 import time
-import random
 
 
-class LowPower(Exception):
+class LowWater(Exception):
     pass
 
 
-class NoPower(Exception):
+class LowBattery(Exception):
     pass
 
 
-class NoWater(Exception):
+class FullTank(Exception):
     pass
 
 
-class AlmostFilledGarbage(Exception):
+class WithoutWater(Exception):
     pass
 
 
-class VacuumRobot:
-    energy_loss = 2
-    water_loss = 2
+class WithoutCharge(Exception):
+    pass
 
-    def __init__(self, charge_level, garbage_fullness, water_left):
-        self.charge_level = charge_level
-        self.garbage_fullness = garbage_fullness
-        self.water_left = water_left
+
+class CleanTank(Exception):
+    pass
+
+
+class VacCleaner:
+    def __init__(self, water, battery, tank):
+        self.water = water
+        self.battery = battery
+        self.tank = tank
 
     def wash(self):
-        if self.water_left == 0:
-            raise NoWater
-            # return
-        self.water_left = max(self.water_left - self.water_loss, 0)
+        if self.water == 0:
+            raise WithoutWater
+        else:
+            self.water -= 1
+            print(f'Washing...\n Water tank is {self.water}%')
+            if 2 <= self.water <= 15:
+                raise LowWater
 
-    def vacuum_cleaner(self):
-        self.garbage_fullness = min(self.garbage_fullness + random.randint(1, 3), 100)
-        if self.garbage_fullness > 90:
-            raise AlmostFilledGarbage
-        if self.garbage_fullness == 100:
-            print("Container is full")
-            self.garbage_fullness = 0
+    def perc_batt(self):
+        if self.battery <= 0:
+            raise WithoutCharge
+        else:
+            self.battery -= 1
+            print(f'Moving...\n Battery is {self.battery}%.')
+            if 1 <= self.battery <= 20:
+                raise LowBattery
 
-    def step_end(self):
-        self.charge_level = max(self.charge_level - self.energy_loss, 0)
-        if self.charge_level == 0:
-            raise NoPower
-        elif self.charge_level < 20:
-            raise LowPower
-
-
-def wash(robot):
-    print('wash')
-    robot.wash()
-
-
-def vacuum_cleaner(robot):
-    print('vacuum_cleaner')
-    robot.vacuum_cleaner()
+    def full_tank(self):
+        if self.tank >= 100:
+            raise FullTank
+        else:
+            self.tank += 1
+            print(f'Cleaning...\n Tank is {self.tank}%.')
+            if 99 >= self.tank >= 90:
+                raise CleanTank
 
 
-test_robot = VacuumRobot(40, 20, 10)
+def move():
+    vac_cleaner = VacCleaner(5, 50, 50)
 
-
-def move(robot):
-    i = 4
-    k = 0
+    print(f'Level of water tank is {vac_cleaner.water}%.')
+    print(f'Level of charge {vac_cleaner.battery}%.')
+    print(f'Fullness of dust tank is {vac_cleaner.tank}%.')
+    print('Start cleaning:')
     while True:
-        print("move")
         try:
-            wash(robot)
-        except NoWater:
-            if k == 0:
-                print("There is no water, please fill up tank.")
-                k += 1
-        try:
-            vacuum_cleaner(robot)
-        except AlmostFilledGarbage:
-            print('Container is  full, please clean it up!')
-        try:
-            robot.step_end()
-        except NoPower:
-            print("Battery is discharged")
+            vac_cleaner.perc_batt()
+        except LowBattery:
+            print(f'WARNING: level of battery {vac_cleaner.battery}%. \n Need charging.')
+        except WithoutCharge:
+            print(f'level of battery {vac_cleaner.battery}%. \n STOP!!!.')
             break
-        except LowPower:
-            if i == 0:
-                print("I need to be charged!!!")
-                break
-            else:
-                print(f"Battery low, {i} steps remaining")
-                i = i - 1
+
+        try:
+            vac_cleaner.wash()
+        except LowWater:
+            print(f'Water is {vac_cleaner.water}%. Need add.')
+        except WithoutWater:
+            print(f'Level of water {vac_cleaner.water}%, only cleaning ')
+
+        try:
+            vac_cleaner.full_tank()
+        except CleanTank:
+            print(f'WARNING: level of fullness tank is {vac_cleaner.tank}%. \n Need cleaning tank.')
+        except FullTank:
+            print(f'Dust tank is {vac_cleaner.tank}%, only washing!')
         time.sleep(1)
 
 
-move(test_robot)
+move()
