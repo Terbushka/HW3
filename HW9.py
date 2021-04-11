@@ -103,6 +103,9 @@ def calculator():
         except UnboundLocalError:
             print('One of the numbers is not decimal')
             logging.error("indefinite variable")
+        except ZeroDivisionError:
+            logging.error("ZeroDivisionError")
+            print("Zero can`t be raised to a negative power")
     elif operation == 'nrt':
         logging.info("the n-th root function is selected")
         try:
