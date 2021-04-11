@@ -237,24 +237,24 @@ def move():
         try:
             vac_cleaner.perc_batt()
         except LowBattery:
-            print(f'WARNING: level of battery {vac_cleaner.battery}%. \n Need charging.')
+            print(f'WARNING: level of battery {vac_cleaner.battery}%. \n Need to be charged.')
         except WithoutCharge:
-            print(f'level of battery {vac_cleaner.battery}%. \n STOP!!!.')
+            print(f'level of battery {vac_cleaner.battery}%. \n Stop working.')
             break
 
         try:
             vac_cleaner.wash()
         except LowWater:
-            print(f'Water is {vac_cleaner.water}%. Need add.')
+            print(f'Water is {vac_cleaner.water}%. Please fill up tank.')
         except WithoutWater:
-            print(f'Level of water {vac_cleaner.water}%, only cleaning ')
+            print(f'Level of water {vac_cleaner.water}%, only dry cleaning...')
 
         try:
             vac_cleaner.full_tank()
         except CleanTank:
-            print(f'WARNING: level of fullness tank is {vac_cleaner.tank}%. \n Need cleaning tank.')
+            print(f'WARNING: level of fullness tank is {vac_cleaner.tank}%. \n  Clean tank!!!.')
         except FullTank:
-            print(f'Dust tank is {vac_cleaner.tank}%, only washing!')
+            print(f'Tank is {vac_cleaner.tank}%, only washing!')
         time.sleep(1)
 
 
